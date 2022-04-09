@@ -9,11 +9,14 @@ function checkVulnerableHTML(body, ip, port, protocol) {
     const $ = cheerio.load(body);
     if (body.includes('Index of')) {
         Logger.warn(`Found possible Directory Listing on: http://${ip}:${port}`);
-    } else if (body.includes('cluster_name') || body.includes('cluster_uuid')) {
-        Logger.warn(`Found possible open Elasticsearch service on: http://${ip}:${port}`);
-    } else {
-        Logger.output(`Found title on ${protocol}${ip}:${port} - ${$('title').text().trim()}`);
     }
+
+    if (body.includes('cluster_name') || body.includes('cluster_uuid')) {
+        Logger.warn(`Found possible open Elasticsearch service on: http://${ip}:${port}`);
+        return;
+    }
+
+    Logger.info(`Found title on ${protocol}${ip}:${port} - ${$('title').text().trim()}`);
 }
 
 HTMLParser.parse = async ({ ip, port }) => {

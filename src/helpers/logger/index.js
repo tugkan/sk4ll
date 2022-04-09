@@ -1,5 +1,9 @@
 // Logger service
 import winston from 'winston';
+import yargs from 'yargs/yargs';
+import { hideBin } from 'yargs/helpers';
+
+const { argv } = yargs(hideBin(process.argv));
 
 const alignColorsAndTime = winston.format.combine(
     winston.format.colorize({
@@ -11,7 +15,7 @@ const alignColorsAndTime = winston.format.combine(
 );
 
 const Logger = winston.createLogger({
-    level: process.env.DEBUG_LEVEL || 'info',
+    level: argv.logLevel || 'info',
     transports: [
         new (winston.transports.Console)({
             format: winston.format.combine(winston.format.colorize(), alignColorsAndTime),

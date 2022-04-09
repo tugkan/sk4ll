@@ -1,5 +1,3 @@
-process.env.TZ = 'UTC';
-
 module.exports = {
     cacheDirectory: 'jest-cache',
     collectCoverage: true,

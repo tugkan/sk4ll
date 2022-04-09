@@ -1,0 +1,7 @@
+apify_storage
+node_modules
+packege-lock.json
+*.log
+jest-cache
+jest-coverage
+*.conf

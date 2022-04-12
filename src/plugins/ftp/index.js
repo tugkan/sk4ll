@@ -22,7 +22,6 @@ const FTP = {
 
             return stdout;
         } catch (error) {
-            console.log(error);
             Logger.debug('Error executing FTP shell');
         }
         return '';

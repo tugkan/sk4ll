@@ -23,6 +23,7 @@ const SSH = {
         } catch (error) {
             Logger.debug('Error executing SSH shell');
         }
+        return '';
     },
     validator: ({ ip, port, output }) => {
         if (output.includes('root')) {

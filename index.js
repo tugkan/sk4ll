@@ -1,11 +1,11 @@
-import Initializer from '@helpers/initializer';
-import Masscan from '@scanners/masscan';
+import Initializer from '@lib/initializer';
+import Masscan from '@lib/masscan';
 
 const App = {
-    init: () => {
-        const { cidrBlocks, ports } = Initializer.init();
-        Masscan.exec(cidrBlocks, ports);
-        Initializer.initListeners();
+    init: async () => {
+        const cidrBlocks = Initializer.init();
+        const { ports, pluginInfo } = await Initializer.initPlugins();
+        Masscan.exec(cidrBlocks, ports, pluginInfo);
     },
 };
 

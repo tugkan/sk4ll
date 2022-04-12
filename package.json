@@ -1,31 +1,28 @@
 {
-  "name": "cidr-scanner",
+  "name": "sk4ll",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js",
-    "test": "jest --ci"
+    "start": "babel-node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/tugkan/cidr-scanner.git"
+    "url": "git+ssh://git@github.com/tugkan/sk4ll.git"
   },
-  "author": "",
+  "author": "Tugkan Cengiz",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/tugkan/cidr-scanner/issues"
+    "url": "https://github.com/tugkan/sk4ll/issues"
   },
-  "homepage": "https://gitlab.com/tugkan/cidr-scanner#readme",
+  "homepage": "https://github.com/tugkan/sk4ll#readme",
   "devDependencies": {
     "@apify/eslint-config": "0.2.4",
     "@babel/core": "7.17.8",
     "@babel/node": "7.16.8",
     "@babel/preset-env": "7.16.11",
     "babel-plugin-module-resolver": "4.1.0",
-    "eslint": "8.12.0",
-    "eslint-plugin-jest": "^26.1.3",
-    "jest": "^27.5.1"
+    "eslint": "8.12.0"
   },
   "dependencies": {
     "@apify/http-request": "2.1.2",

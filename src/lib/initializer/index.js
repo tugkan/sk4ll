@@ -1,13 +1,9 @@
 import fs from 'fs';
-import EventService from '@helpers/event-service';
-import Logger from '@helpers/logger';
-import Mongo from '@scanners/mongo';
-import Redis from '@scanners/redis';
-import Mysql from '@scanners/mysql';
-import HTMLParser from '@scanners/html-parser';
-
+import path from 'path';
 import { hideBin } from 'yargs/helpers';
 import yargs from 'yargs/yargs';
+import Logger from '@lib/logger';
+import EventService from '@lib/event-service';
 
 const { argv } = yargs(hideBin(process.argv));
 
@@ -15,9 +11,39 @@ const EventEmitter = EventService.getInstance();
 
 const Initializer = {
     print: {},
+    argv: {},
 };
 
-Initializer.argv = argv;
+Initializer.initPlugins = async () => {
+    let plugins;
+    if (!argv.plugin || argv.plugin === 'all') {
+        plugins = await fs.promises.readdir(
+            path.join(__dirname, '..', '..', 'plugins'),
+        );
+    } else {
+        plugins = argv.plugin.split(',');
+    }
+
+    let ports = [];
+    const pluginInfo = {};
+    Logger.debug(`Found ${plugins.length} plugins`);
+    for (const plugin of plugins) {
+        const pluginPath = path.join(__dirname, '..', '..', 'plugins', plugin);
+        const Plugin = require(pluginPath).default; // eslint-disable-line
+        EventEmitter.on(`scan.${Plugin.service}`, Plugin.init);
+        ports = ports.concat(Plugin.ports);
+        Logger.debug(`Initialized plugin: ${Plugin.name}`);
+
+        for (const port of Plugin.ports) {
+            pluginInfo[port] = Plugin.service;
+        }
+    }
+
+    Logger.info(`Loaded ${plugins.length} plugin(s)`);
+    Logger.info(`Port(s): ${ports.join(',')}`);
+
+    return { ports, pluginInfo };
+};
 
 Initializer.getCidrBlocks = () => {
     if (!argv.cidrBlocks && !argv.cidrFiles) {
@@ -26,7 +52,7 @@ Initializer.getCidrBlocks = () => {
     }
 
     if (argv.cidrBlocks) {
-        Logger.info(`Loaded ${argv.cidrBlocks.length} blocks`);
+        Logger.info(`Loaded ${argv.cidrBlocks.length} CIDR blocks`);
         Logger.debug(`CIDR_BLOCKS: ${argv.cidrBlocks}`);
         return argv.cidrBlocks;
     }
@@ -48,33 +74,6 @@ Initializer.getCidrBlocks = () => {
         Logger.debug(`CIDR_BLOCKS: ${argv.cidrFiles}`);
         return blocks.join(',');
     }
-};
-
-Initializer.getPorts = () => {
-    if (!argv.ports) {
-        Logger.error('Please provide a valid port. Example: 80,443,8080');
-        process.exit();
-    }
-
-    Logger.debug(`Parsing ports`);
-
-    const parsedPorts = `${argv.ports}`.split(',').map((port) => parseInt(`${port}`.trim(), 10));
-
-    if (parsedPorts.filter((port) => !Number.isInteger(port)).length > 0) {
-        Logger.error('Please provide a valid port. Example: 80,443,8080');
-        process.exit();
-    }
-
-    Logger.info(`Loaded ${parsedPorts.length} ports`);
-    Logger.debug(`Ports: ${parsedPorts}`);
-    return parsedPorts;
-};
-
-Initializer.initListeners = () => {
-    EventEmitter.on(EventService.constants.scanner.mongo.scan, Mongo.exec);
-    EventEmitter.on(EventService.constants.scanner.html.scan, HTMLParser.parse);
-    EventEmitter.on(EventService.constants.scanner.redis.scan, Redis.exec);
-    EventEmitter.on(EventService.constants.scanner.mysql.scan, Mysql.exec);
 };
 
 Initializer.print.header = () => {
@@ -106,7 +105,7 @@ on the given CIDR blocks within the given ports.
 };
 
 Initializer.print.proxy = () => {
-    if (argv.p || argv.proxy) {
+    if (!argv.p && !argv.proxy) {
         Logger.info('No proxy is provided. Might be problematic...');
     } else {
         Logger.info('Proxy loaded');
@@ -121,10 +120,12 @@ Options:
     -p, --proxy                Proxy URL to use
     -c, --cidr                 CIDR blocks to scan. Example: 10.10.10.10/8,10.10.10.11/16
     -f, --cidr-files           CIDR files to scan. Example: ./data/cidr.json,./data/cidr1.json
-    -P, --ports                Ports to scan. Example: 80,443,8080
+    --plugin                  Plugins to use. Example: redis,mongo,mysql. Default is "all"
     -l, --log-level            Log level. Example: info
   `);
 };
+
+Initializer.argv = argv;
 
 Initializer.init = () => {
     Initializer.print.header();
@@ -134,12 +135,8 @@ Initializer.init = () => {
     }
     Initializer.print.proxy();
     const cidrBlocks = Initializer.getCidrBlocks();
-    const ports = Initializer.getPorts();
 
-    return {
-        cidrBlocks,
-        ports,
-    };
+    return cidrBlocks;
 };
 
 export default Initializer;

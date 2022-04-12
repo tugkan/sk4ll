@@ -5,8 +5,8 @@
   "plugins": [
     ["module-resolver", {
       "alias": {
-        "@helpers": "./src/helpers",
-        "@scanners": "./src/scanners"
+        "@plugins": "./src/plugins",
+        "@lib": "./src/lib"
       }
     }]
   ]

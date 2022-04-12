@@ -1,6 +1,6 @@
-import httpRequest from '@apify/http-request';
-import Logger from '@lib/logger';
-import Initializer from '@lib/initializer';
+const httpRequest = require('@apify/http-request');
+const Logger = require('../../lib/logger');
+const Initializer = require('../../lib/initializer');
 
 const DirectoryListing = {
     ports: [80, 443],
@@ -47,4 +47,4 @@ const DirectoryListing = {
     },
 };
 
-export default DirectoryListing;
+module.exports = DirectoryListing;

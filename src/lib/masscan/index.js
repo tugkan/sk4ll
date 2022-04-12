@@ -1,6 +1,6 @@
-import { exec } from 'child_process';
-import EventService from '@lib/event-service';
-import Logger from '@lib/logger';
+const { exec } = require('child_process');
+const EventService = require('../event-service');
+const Logger = require('../logger');
 
 const EventEmitter = EventService.getInstance();
 
@@ -45,4 +45,4 @@ Masscan.exec = (cidrBlocks, ports, pluginInfo) => {
     });
 };
 
-export default Masscan;
+module.exports = Masscan;

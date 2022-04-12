@@ -1,9 +1,9 @@
-import fs from 'fs';
-import path from 'path';
-import { hideBin } from 'yargs/helpers';
-import yargs from 'yargs/yargs';
-import Logger from '@lib/logger';
-import EventService from '@lib/event-service';
+const fs = require('fs');
+const path = require('path');
+const { hideBin } = require('yargs/helpers');
+const yargs = require('yargs/yargs');
+const EventService = require('../event-service');
+const Logger = require('../logger');
 
 const { argv } = yargs(hideBin(process.argv));
 
@@ -29,7 +29,7 @@ Initializer.initPlugins = async () => {
     Logger.debug(`Found ${plugins.length} plugins`);
     for (const plugin of plugins) {
         const pluginPath = path.join(__dirname, '..', '..', 'plugins', plugin);
-        const Plugin = require(pluginPath).default; // eslint-disable-line
+        const Plugin = require(pluginPath); // eslint-disable-line
         EventEmitter.on(`scan.${Plugin.service}`, Plugin.init);
         ports = ports.concat(Plugin.ports);
         Logger.debug(`Initialized plugin: ${Plugin.name}`);
@@ -139,4 +139,4 @@ Initializer.init = () => {
     return cidrBlocks;
 };
 
-export default Initializer;
+module.exports = Initializer;

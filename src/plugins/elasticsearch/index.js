@@ -1,6 +1,6 @@
-import httpRequest from '@apify/http-request';
-import Logger from '@lib/logger';
-import Initializer from '@lib/initializer';
+const httpRequest = require('@apify/http-request');
+const Initializer = require('../../lib/initializer');
+const Logger = require('../../lib/logger');
 
 const Elasticsearch = {
     ports: [9200, 9201, 9300],
@@ -47,4 +47,4 @@ const Elasticsearch = {
     },
 };
 
-export default Elasticsearch;
+module.exports = Elasticsearch;

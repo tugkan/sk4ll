@@ -1,6 +1,6 @@
-import util from 'util';
-import { exec } from 'child_process';
-import Logger from '@lib/logger';
+const util = require('util');
+const { exec } = require('child_process');
+const Logger = require('../../lib/logger');
 
 const execP = util.promisify(exec);
 
@@ -43,4 +43,4 @@ const Mysql = {
     },
 };
 
-export default Mysql;
+module.exports = Mysql;

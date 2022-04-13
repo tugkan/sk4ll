@@ -3,14 +3,12 @@
 Sk4ll is a modular and plugin based CIDR scanner which got inspired by this [article](https://infosecwriteups.com/how-i-discovered-thousands-of-open-databases-on-aws-764729aa7f32) by [Avi Lumelsky](https://mobile.twitter.com/avi_lum). Just to keep in mind that this repository is there for **educational purposes**.
 
 ## Overview
-
 Internally, Sk4ll uses `masscan` to scan all the [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) blocks that has been provided by the user. Then by each of the plugin, Sk4ll decides to use which ports are the most important ones and triggers an internal Node Event to inform the plugins for the execution.
 
 When an event gets received by the plugins, the `init` function of them will be triggered with the payload of `ip` and `port`. After that point, what needs to be done (base logic of the ip/port pair) will be decided and initiated by the plugin itself.
 
 
 ## Installation
-
 You can find the required and plugin-based CLI tools that you need to install below.
 
 - [Masscan](https://github.com/robertdavidgraham/masscan) (Required)
@@ -39,7 +37,6 @@ const sk4ll = require('sk4ll');
 ```
 
 ## Usage
-
 S4kll has several different base parameters which helps users to define what needs to be scanned and what should be prioritized.
 
 ### Help (-h)
@@ -103,7 +100,6 @@ For an example; after you check the possible open Redis service, you can initiat
 
 
 ## Supported Plugins
-
 * Directory Listing
 * Elasticsearch
 * FTP

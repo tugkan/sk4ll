@@ -11,11 +11,10 @@ When an event gets received by the plugins, the `init` function of them will be 
 
 ## Installation
 
-Please keep in mind that Sk4ll uses command line executions to scan the targets. That's why you have to install the pre-requisite libraries first. You can find the required and plugin-based CLI tools that you need to install below.
+You can find the required and plugin-based CLI tools that you need to install below.
 
 - [Masscan](https://github.com/robertdavidgraham/masscan) (Required)
 - [Wget](https://www.gnu.org/software/wget/) (Optional by FTP plugin)
-
 
 
 This package is developed specifically for the CLI usage however you can also use it as a library as far as you pass the arguments to the library itself.

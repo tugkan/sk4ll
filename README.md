@@ -102,12 +102,22 @@ module.exports = PluginName;
 For an example; after you check the possible open Redis service, you can initiate a bash script to exploit and retrieve a reverse shell from the vulnerable service itself.
 
 
+## Supported Plugins
+
+* Directory Listing
+* Elasticsearch
+* FTP
+* Mongo
+* MySQL
+* PostgreSQL
+* Redis
+* SSH
+
+
 ## Todo
 * Development of LDAP plugin
 * Development of SMB plugin
-* Development of PostgreSQL plugin
 * Development of MSSQL plugin
 * Development of Kibana plugin
 * Development of Grafana plugin
-* Removing all the prerequisites
 * 100% coverage on the tests (and initial test development)

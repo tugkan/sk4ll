@@ -14,8 +14,6 @@ When an event gets received by the plugins, the `init` function of them will be 
 Please keep in mind that Sk4ll uses command line executions to scan the targets. That's why you have to install the pre-requisite libraries first. You can find the required and plugin-based CLI tools that you need to install below.
 
 - [Masscan](https://github.com/robertdavidgraham/masscan) (Required)
-- [Redis](https://redis.io/) (Optional by plugin)
-- [Mongo](https://www.mongodb.com/) (Optional by plugin)
 - [MySQL](https://www.mysql.com/) (Optional by plugin)
 - [Wget](https://www.gnu.org/software/wget/) (Optional by FTP plugin)
 
@@ -50,14 +48,14 @@ S4kll has several different base parameters which helps users to define what nee
 This command prints all the possible options that can be used on Sk4ll. It is the most known basic command.
 
 ### Proxy (-p, --proxy)
-Some of the plugins like Directory Listing and Elasticsearch is based on HTTP scanning. This option is completely optional but *suggested* if you would like to use the HTTP or HTTPS protocol on the plugins. 
+Some of the plugins like Directory Listing and Elasticsearch is based on HTTP scanning. This option is completely optional but *suggested* if you would like to use the HTTP or HTTPS protocol on the plugins.
 
 Example;
 
 `--proxy=http://PROXY_URL`
 
 ### CIDR Blocks (-c, --cidr)
-This command is being used for `masscan` to scan all the IPs inside the provided CIDR blocks. This option also supports multiple CIDR blocks at once. 
+This command is being used for `masscan` to scan all the IPs inside the provided CIDR blocks. This option also supports multiple CIDR blocks at once.
 
 `-c=10.10.14.14/8,1.2.3.4/16`
 
@@ -113,4 +111,5 @@ For an example; after you check the possible open Redis service, you can initiat
 * Development of MSSQL plugin
 * Development of Kibana plugin
 * Development of Grafana plugin
+* Removing all the prerequisites
 * 100% coverage on the tests (and initial test development)

@@ -52,9 +52,10 @@ Initializer.getCidrBlocks = () => {
     }
 
     if (argv.cidrBlocks) {
-        Logger.info(`Loaded ${argv.cidrBlocks.length} CIDR blocks`);
-        Logger.debug(`CIDR_BLOCKS: ${argv.cidrBlocks}`);
-        return argv.cidrBlocks;
+        const blocks = Array.isArray(argv.cidrBlocks) ? argv.cidrBlocks : [argv.cidrBlocks];
+        Logger.info(`Loaded ${blocks.length} CIDR blocks`);
+        Logger.debug(`CIDR_BLOCKS: ${blocks}`);
+        return blocks;
     }
 
     if (argv.cidrFiles) {

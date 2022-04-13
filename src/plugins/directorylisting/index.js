@@ -1,4 +1,5 @@
 const httpRequest = require('@apify/http-request');
+const cheerio = require('cheerio');
 const Logger = require('../../lib/logger');
 const Initializer = require('../../lib/initializer');
 
@@ -40,6 +41,10 @@ const DirectoryListing = {
             Logger.warn(`Found possible Directory Listing on: http://${ip}:${port}`);
             return true;
         }
+
+        const $ = cheerio.load(output);
+        Logger.debug(`Found title on: http://${ip}:${port} - ${$('title').text().trim()}`);
+
         return false;
     },
     payload: ({ ip, port }) => {

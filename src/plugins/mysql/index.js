@@ -29,9 +29,11 @@ const Mysql = {
         return '';
     },
     validator: ({ ip, port, output }) => {
-        if (!output.includes('denied')
+        if (output !== ''
+        && !output.includes('denied')
         && !output.includes('not allowed')
-        && !output.includes('Lost connection')) {
+        && !output.includes('Lost connection')
+        && !output.includes('Enter password')) {
             Logger.warn(`Found vulnerable MySQL service on ${ip}:${port}`);
             return true;
         }

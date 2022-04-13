@@ -26,7 +26,7 @@ const Redis = {
         return '';
     },
     validator: ({ ip, port, output }) => {
-        if (!output.includes('error')) {
+        if (output !== '' && !output.includes('error')) {
             Logger.warn(`Found vulnerable Redis service on ${ip}:${port}`);
             return true;
         }

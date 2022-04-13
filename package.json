@@ -25,6 +25,9 @@
     "@apify/http-request": "2.1.2",
     "cheerio": "1.0.0-rc.10",
     "mongodb": "^4.5.0",
+    "mysql": "^2.18.1",
+    "node-ssh": "^12.0.4",
+    "promise-mysql": "^5.1.0",
     "redis": "^4.0.6",
     "winston": "3.7.2",
     "yargs": "^17.4.0"

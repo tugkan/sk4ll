@@ -5,3 +5,4 @@ jest-cache
 jest-coverage
 *.conf
 .env
+.DS_Store
